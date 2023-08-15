@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import { Routes, Route, useParams } from 'react-router-dom'
+import Navbar from './layout/navbar/navbar.component';
+import BrowseActive from './routes/browse-active/browse-active.component';
+import BrowseInactive from './routes/browse-inactive/browse-inactive.component';
+import CreateTask from './routes/create-task/create-task.component';
+import ViewTask from './routes/view-task/view-task.component';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navbar />}>
+        <Route index element={<BrowseActive />} />
+        <Route path="browse-inactive" element={<BrowseInactive />} />
+        <Route path="create-task" element={<CreateTask />} />
+        <Route path="view-task" element={<ViewTask />} />
+      </Route>
+    </Routes>
   );
 }
 
