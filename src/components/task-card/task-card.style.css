@@ -14,6 +14,11 @@
     padding: 10px;
 }
 
+.task-card-subtitle {
+    margin: 1%;
+    font-size: larger;
+}
+
 .task-card-preview {
     display: grid;
     width: 55vw;
