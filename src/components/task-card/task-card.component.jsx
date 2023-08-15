@@ -1,5 +1,5 @@
 import './task-card.style.css';
-import GoSmiley from '../../assets/hobby-task';
+import GoSmiley from '../../assets/hobby-task.icon';
 
 const TaskCard = (props) => {
 
