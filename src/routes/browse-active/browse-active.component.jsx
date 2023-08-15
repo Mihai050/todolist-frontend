@@ -1,5 +1,9 @@
+import './browse-active.style.css';
+
 const BrowseActive = () => {
-  return <div>This is the Browse-active-task page</div>;
+  return (<div className='wrapper-body-page'>
+    hello world
+  </div>);
 };
 
 export default BrowseActive;

@@ -1,0 +1,5 @@
+.navbar-button {
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+}

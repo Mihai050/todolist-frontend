@@ -1,3 +1,5 @@
+import './navbar-button.style.css';
+
 const NavbarButton = (props) => {
     const { name } = props;
     return (

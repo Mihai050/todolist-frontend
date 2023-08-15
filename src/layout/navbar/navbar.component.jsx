@@ -1,17 +1,17 @@
 import { Outlet, Link } from 'react-router-dom'
-import { Fragment } from 'react';
 import NavbarButton from '../../components/navbar-button/navbar-button.component';
+import './navbar.style.css';
 
 
 const Navbar = () => {
 
     const paths = [
       {
-        pathName: "Home",
+        pathName: "Active Tasks",
         linkTo: "/",
       },
       {
-        pathName: "Inactive",
+        pathName: "Inactive Tasks",
         linkTo: "browse-inactive",
       },
       {
@@ -21,14 +21,14 @@ const Navbar = () => {
     ];
 
   return (
-    <Fragment>
-      <div>
+    <div className='main-wrapper'>
+      <div className='navbar-body'>
         {paths.map((path, index) => 
-            <Link key={index} to={path.linkTo}> <NavbarButton name={path.pathName}/> </Link>
+            <Link className="link-button"key={index} to={path.linkTo}> <NavbarButton name={path.pathName}/> </Link>
         )}
       </div>
       <Outlet />
-    </Fragment>
+    </div>
   );
 };
 
