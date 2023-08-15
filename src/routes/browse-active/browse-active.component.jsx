@@ -6,13 +6,24 @@ import TaskCard from '../../components/task-card/task-card.component';
 const BrowseActive = () => {
 
 
-  return (<div className='wrapper-body-page'>
-    <MessagePanel isDisplayedOnHome={true} unfinished={1} urgent={3} name='Mihai'/>
-    <Toolbar/>
-    <TaskCard />
-    
-    
-  </div>);
+  return (
+    <div className="wrapper-body-page">
+      <MessagePanel
+        isDisplayedOnHome={true}
+        unfinished={1}
+        urgent={3}
+        name="Mihai"
+      />
+      <Toolbar />
+      <TaskCard />
+      <TaskCard />
+      <TaskCard />
+      <TaskCard />
+      <TaskCard />
+      <TaskCard />
+      <TaskCard />
+    </div>
+  );
 };
 
 export default BrowseActive;

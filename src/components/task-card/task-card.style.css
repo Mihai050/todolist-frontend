@@ -13,3 +13,20 @@
     justify-content: space-between;
     padding: 10px;
 }
+
+.task-card-preview {
+    display: grid;
+    width: 55vw;
+    
+}
+
+.task-text-container {
+    overflow-y: auto;
+    width: 85%;
+    height: 10rem;
+    margin: auto;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    
+}
