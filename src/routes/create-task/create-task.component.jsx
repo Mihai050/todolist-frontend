@@ -1,11 +1,70 @@
 import './create-task.style.css';
+import { useState } from 'react';
+import getDateLimit from '../../utils/getDateLimit';
+
 
 const CreateTask = () => {
-  const currentYear = new Date().getFullYear();
-  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
-  const currentDay = String(new Date().getDate()).padStart(2, "0");
-  const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-  console.log(currentDate);
+  const currentDate = getDateLimit();
+  
+  const [taskInfo, setTaskInfo] = useState({});
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [warning, setWarning] = useState('');
+
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    const task = {... taskInfo};
+    task[name] = value;
+    setTaskInfo(task);
+  }
+
+  const handleSubmit = () => {
+    if(!taskInfo.title){
+      setWarning('Enter a title for your task!');
+      return;
+    }
+
+    if (!taskInfo.description) {
+      setWarning("Enter a description for your task!");
+      return;
+    }
+  
+      if (!taskInfo.deadline){
+        setWarning("Enter a deadline for your task!");
+      }
+
+    if (!taskInfo.estimatedTime) {
+      setWarning("Enter an estimated duration for your task!");
+      return;
+    }
+
+    if(taskInfo.estimatedTime < 0){
+      setWarning("Task can only take positive hours to complete!");
+      return;
+    }
+
+    if (!taskInfo.taskType) {
+      setWarning("Enter a type for your task!");
+    }
+
+    fetch('/api/add-task', {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskInfo),
+    }).then((response) => {
+      if(response.status === 200){
+        setWarning("Task created successfully! You can now go back!");
+        setIsDisabled(true);
+      } else {
+        setWarning("There was an error creating the task!");
+      }
+    }).catch(() => {
+      setWarning("There was an error creating the task!");
+    })
+  }
+
 
   return (
     <div className="form-container">
@@ -13,33 +72,54 @@ const CreateTask = () => {
       <div className="error-info"></div>
       <div className="form-section">
         <p className="form-title">Add new task</p>
-        <p className='warning'>This is a warning</p>
-        <div class="form-element">
+        <p className="warning" style={{ color: isDisabled ? "green" : "red" }}>
+          {warning}
+        </p>
+        <div className="form-element">
           <p>Title:</p>
-          <input type="text" className="" placeholder="Title" />
+          <input
+            type="text"
+            className=""
+            placeholder="Title"
+            name="title"
+            onChange={handleChange}
+          />
         </div>
-        <div class="form-element">
+        <div className="form-element">
           <p>Description:</p>
-          <textarea />
+          <textarea name="description" onChange={handleChange} />
         </div>
 
-        <div class="form-element">
+        <div className="form-element">
           <p>End date:</p>
-          <input type="date" min={currentDate} label="get finish day" />
+          <input
+            type="date"
+            min={currentDate}
+            label="get finish day"
+            onChange={handleChange}
+            name="deadline"
+          />
         </div>
-        <div class="form-element">
-          <p>Estimated duration:</p>
-          <input type="text" />
+        <div className="form-element">
+          <p>Estimated duration in hours:</p>
+          <input type="number" min={0} name="estimatedTime" onChange={handleChange} />
         </div>
-        <div class="form-element">
+        <div className="form-element">
           <p>Type:</p>
-          <select name="Type" id="type">
+          <select name="taskType" id="type" onChange={handleChange}>
+            <option value="" disabled selected hidden>
+              Please select an option
+            </option>
             <option value="Hobby">Hobby</option>
-            <option value="Not hobbi">not hobbi</option>
+            <option value="School">School</option>
+            <option value="Work">Work</option>
+            <option value="Home">Home</option>
           </select>
         </div>
+        <button onClick={handleSubmit} disabled={isDisabled} className="submit-task-button">
+          Submit
+        </button>
       </div>
-      <div className="button-wrapper"></div>
     </div>
   );
 };

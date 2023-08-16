@@ -7,10 +7,10 @@ const ViewTask = () => {
     const [task, setTask] = useState(null);
 
     useEffect(() => {
-        fetch(`/api/get-task/${taskId}`)
-            .then((response) => response.json())
-            .then((data) => {setTask(data)
-            console.log(data)});
+      fetch(`/api/get-task/${taskId}`)
+          .then((response) => response.json())
+          .then((data) => {setTask(data)
+          console.log(data)});
             
     }, [])
 
