@@ -1,0 +1,26 @@
+.container{
+        border-radius: 14px;
+    border: 1px solid black;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-top: 2rem;
+    width: 60%;
+    place-self: center;
+}
+
+.header{
+    display: flex;
+   justify-content: space-between; 
+}
+
+
+.submit-button{
+    border-radius: 10px;
+    width: auto;
+    cursor: pointer;
+    place-content: center;
+    text-align: center;
+
+}
