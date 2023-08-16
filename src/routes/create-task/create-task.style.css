@@ -1,0 +1,34 @@
+.form-section{
+        border-radius: 14px;
+    border: 1px solid black;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-top: 2rem;
+    width: 585px;
+}
+.form-container{
+    display: flex;
+    place-content: center;
+}
+.form-title{
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.form-element p{
+    font-size: 1.1rem;
+}
+.form-element input[type="text"] {
+    width: 100%;
+    height: 30px;
+}
+.warning{
+    color: red;
+    
+}
+.form-element textarea{
+    width: 100%;
+    height: 30px;
+}
