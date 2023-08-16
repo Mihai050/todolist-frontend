@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './layout/navbar/navbar.component';
 import BrowseActive from './routes/browse-active/browse-active.component';
 import BrowseInactive from './routes/browse-inactive/browse-inactive.component';
@@ -13,7 +13,7 @@ function App() {
         <Route index element={<BrowseActive />} />
         <Route path="browse-inactive" element={<BrowseInactive />} />
         <Route path="create-task" element={<CreateTask />} />
-        <Route path="view-task" element={<ViewTask />} />
+        <Route path="view-task/:taskId" element={<ViewTask />} />
       </Route>
     </Routes>
   );
