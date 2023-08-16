@@ -14,12 +14,11 @@ const ViewTask = () => {
 
     
     return (
-    <div className="wrapper-body-page">
-        <h5>Title {task.title}</h5>
-        <h6>Task type: {task.taskType}</h6>
-        <h6>Task details: {task.description}</h6>
-        
-    </div>
+      <div className="wrapper-body-page">
+        <h5>Title {task && task.title}</h5>
+        <h6>Task type: {task && task.taskType}</h6>
+        <h6>Task details: {task && task.description}</h6>
+      </div>
     );
 };
 
