@@ -19,7 +19,12 @@ const ViewTask = () => {
 
     useEffect(() => {
     fetch(`/api/get-task/${taskId}`)
-        .then((response) => response.json())
+        .then((response) => {
+          if(!response.ok){
+            window.location.href = '/'
+          }
+          return response.json()
+        })
         .then((data) => {setTask(data)});        
     }, [])
 
