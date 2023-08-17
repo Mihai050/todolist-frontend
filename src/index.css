@@ -19,9 +19,9 @@ a {
 }
 
 .wrapper-body-page { 
-    width: 75%;
-    display: grid;
-    justify-content: center;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
     margin-inline: auto;
     min-height: calc(100vh - 4rem);
   
