@@ -99,7 +99,7 @@ const ViewTask = () => {
           <h5>Task deadline: {task && task.deadline.substring(0, 10)}</h5>
           <h5>Estimated time in hours: {task && task.estimatedTime}</h5>
           {task && task.status === "Active" ? <h5>
-            Time remaining: {task && getDayDifference(task.deadline)}{" "}
+            Days remaining: {task && getDayDifference(task.deadline)}{" "}
             {task && getDayDifference(task.deadline) < 2 ? (
               <UrgentTaskIcon />
             ) : null}
