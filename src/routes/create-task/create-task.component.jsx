@@ -5,6 +5,7 @@ import getDateLimit from '../../utils/getDateLimit';
 
 const CreateTask = () => {
   const currentDate = getDateLimit();
+  const taskTypes = ["Hobby", "Work", "Home", "School"];
   
   const [taskInfo, setTaskInfo] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
@@ -44,6 +45,7 @@ const CreateTask = () => {
 
     if (!taskInfo.taskType) {
       setWarning("Enter a type for your task!");
+      return
     }
 
     fetch('/api/add-task', {
@@ -102,7 +104,12 @@ const CreateTask = () => {
         </div>
         <div className="form-element">
           <p>Estimated duration in hours:</p>
-          <input type="number" min={0} name="estimatedTime" onChange={handleChange} />
+          <input
+            type="number"
+            min={0}
+            name="estimatedTime"
+            onChange={handleChange}
+          />
         </div>
         <div className="form-element">
           <p>Type:</p>
@@ -110,13 +117,16 @@ const CreateTask = () => {
             <option value="" disabled selected hidden>
               Please select an option
             </option>
-            <option value="Hobby">Hobby</option>
-            <option value="School">School</option>
-            <option value="Work">Work</option>
-            <option value="Home">Home</option>
+            {taskTypes.map((taskType, index) => (
+              <option key={index} value={taskType}>{taskType}</option>
+            ))}
           </select>
         </div>
-        <button onClick={handleSubmit} disabled={isDisabled} className="submit-task-button">
+        <button
+          onClick={handleSubmit}
+          disabled={isDisabled}
+          className="submit-task-button"
+        >
           Submit
         </button>
       </div>
