@@ -1,5 +1,5 @@
 .container{
-        border-radius: 14px;
+    border-radius: 14px;
     border: 1px solid black;
     padding: 14px 20px;
     display: flex;
@@ -8,6 +8,7 @@
     margin-top: 2rem;
     width: 60%;
     place-self: center;
+    background-color: rgb(186, 128, 58);
 }
 
 .header{
