@@ -1,27 +1,48 @@
 import './task-card.style.css';
+import { Link } from 'react-router-dom'
 import HobbyTaskIcon from '../../assets/hobby-task.icon';
+import WorkTaskIcon from '../../assets/work-task.icon';
+import SchoolTaskIcon from '../../assets/school-task.icon';
+import HomeTaskIcon from '../../assets/home-task.icon';
 import UrgentTaskIcon from '../../assets/urgent-task.icon';
+import getDayDifference from '../../utils/getDayDifference';
 
 const TaskCard = (props) => {
 
+  const {title, taskType, createdAt, deadline, status, _id} = props.task;
+  const daysLeft = getDayDifference(deadline);
+  const getIcon = (taskType) => {
+    if(taskType === "Hobby") return <HobbyTaskIcon />;
+    if(taskType === "School") return <SchoolTaskIcon />;
+    if(taskType === "Home") return <HomeTaskIcon />;
+    if(taskType === "Work") return <WorkTaskIcon />;
+
+  }
+
     return (
-      <div className="task-card">
-        <div className="task-card-upper">
-          <h3>Fix dishes and clean your car</h3>
-          <h3>
-            Type: Hobby <HobbyTaskIcon />
-          </h3>
+      <Link to={`/view-task/${_id}`}>
+        <div className="task-card">
+          <div className="task-card-upper">
+            <h3>{title}</h3>
+            <h3>
+              Type: {taskType} {getIcon(taskType)}
+            </h3>
+          </div>
+
+          <div className="task-card-lower">
+            <h4 className="task-card-date">
+              Created at: {createdAt.substring(0, 10)}
+            </h4>
+            <h4 className="task-card-deadline">
+              Deadline: {deadline.substring(0, 10)}
+            </h4>
+            <h4 className="task-card-left">
+              Days left: {daysLeft} {daysLeft < 2 ? <UrgentTaskIcon /> : null}
+            </h4>
+            <h4 className="task-card-status">Status: {status}</h4>
+          </div>
         </div>
-       
-        <div className="task-card-lower">
-          <h8 className="task-card-date">Created at: 08.09.2023</h8>
-          <h8 className="task-card-deadline">Deadline: 09.10.2023</h8>
-          <h8 className="task-card-left">
-            Days left: 20 <UrgentTaskIcon />
-          </h8>
-          <h8 className="task-card-status">Status: finished</h8>
-        </div>
-      </div>
+      </Link>
     );
 
 }

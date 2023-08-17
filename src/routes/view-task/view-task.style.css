@@ -18,10 +18,14 @@
 
 
 .submit-button{
-    border-radius: 10px;
+    border-radius: 5px;
     width: auto;
     cursor: pointer;
     place-content: center;
     text-align: center;
+    width: 35%;
+    margin-top: 10px;
+    height: 25px;
+    margin-inline: auto;
 
 }
