@@ -34,7 +34,7 @@ const BrowseActive = () => {
   return (
     <div className="wrapper-body-page">
       <MessagePanel number={tasks.length}/>
-      <Toolbar order={isAscending} action={handleClick}/>
+      {tasks.length > 0 && <Toolbar order={isAscending} action={handleClick}/>}
       {tasks.map(task => 
         <TaskCard task={task}/>
       )}

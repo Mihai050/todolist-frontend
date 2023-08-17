@@ -9,7 +9,7 @@ import getDayDifference from '../../utils/getDayDifference';
 
 const TaskCard = (props) => {
 
-  const {title, taskType, createdAt, deadline, status, _id} = props.task;
+  const {title, taskType, createdAt, deadline, status, _id, completionTime, finishedAt} = props.task;
   const daysLeft = getDayDifference(deadline);
   const getIcon = (taskType) => {
     if(taskType === "Hobby") return <HobbyTaskIcon />;
@@ -33,12 +33,19 @@ const TaskCard = (props) => {
             <h4 className="task-card-date">
               Created at: {createdAt.substring(0, 10)}
             </h4>
-            <h4 className="task-card-deadline">
+            {status === 'Active' ? <h4 className="task-card-deadline">
               Deadline: {deadline.substring(0, 10)}
+            </h4> :
+            <h4 className='task-card-deadline'>
+              Finished on: {finishedAt.substring(0, 10)}
             </h4>
-            <h4 className="task-card-left">
+            }
+            {status === 'Active' ? <h4 className="task-card-left">
               Days left: {daysLeft} {daysLeft < 2 ? <UrgentTaskIcon /> : null}
-            </h4>
+            </h4> : 
+            <h4 className="task-card-deadline">
+              Completion time: {completionTime} hours
+              </h4>}
             <h4 className="task-card-status">Status: {status}</h4>
           </div>
         </div>

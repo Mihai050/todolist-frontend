@@ -4,11 +4,12 @@
     padding: 14px 20px;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: rgb(0, 0, 0);
     margin-top: 2rem;
     width: 60%;
     place-self: center;
-    background-color: rgb(186, 128, 58);
+    background-color: rgb(208, 171, 125);
+    font-size: larger;
 }
 
 .header{
