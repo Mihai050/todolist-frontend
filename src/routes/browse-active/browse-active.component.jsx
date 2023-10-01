@@ -10,11 +10,15 @@ const BrowseActive = () => {
   const [isAscending, setIsAscending] = useState(false);
 
   useEffect(()=> {
-    fetch('/api/get-active-tasks').then(response => response.json()).then(data => {
-      setTasks(data);
-      console.log(data);
-    })
+    fetch("http://localhost:8080/api/tasks/active")
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks(data);
+        console.log(data);
+      });
   }, [])
+
+  
 
   const handleClick = () => { 
     setIsAscending(!isAscending);
@@ -36,7 +40,7 @@ const BrowseActive = () => {
       <MessagePanel number={tasks.length}/>
       {tasks.length > 0 && <Toolbar order={isAscending} action={handleClick}/>}
       {tasks.map(task => 
-        <TaskCard task={task}/>
+        <TaskCard task={task} key={task.id}/>
       )}
     </div>
   );

@@ -48,23 +48,30 @@ const CreateTask = () => {
       return
     }
 
-    fetch('/api/add-task', {
+    fetch("http://localhost:8080/api/tasks", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(taskInfo),
-    }).then((response) => {
-      if(response.status === 200){
-        setWarning("Task created successfully! You can now go back!");
-        setIsDisabled(true);
-      } else {
-        setWarning("There was an error creating the task!");
-      }
-    }).catch(() => {
-      setWarning("There was an error creating the task!");
     })
+      .then((response) => {
+        if (response.status === 200) {
+          setWarning("Task created successfully! You can now go back!");
+          setIsDisabled(true);
+        } else {
+           response.json().then((data) => {
+            console.log("___________")
+            console.log(data);
+            setWarning("There was an error creating the task!");
+           });
+        }
+      })
+      .catch(() => {
+        setWarning("There was an error with the server!");
+        console.log("Catch")
+      });
   }
 
 

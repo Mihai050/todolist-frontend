@@ -6,21 +6,35 @@ import SchoolTaskIcon from '../../assets/school-task.icon';
 import HomeTaskIcon from '../../assets/home-task.icon';
 import UrgentTaskIcon from '../../assets/urgent-task.icon';
 import getDayDifference from '../../utils/getDayDifference';
+import OtherTask from '../../assets/other-task.icon';
 
 const TaskCard = (props) => {
 
-  const {title, taskType, createdAt, deadline, status, _id, completionTime, finishedAt} = props.task;
+  const {
+    title,
+    taskType,
+    createdAt,
+    deadline,
+    status,
+    id,
+    completionTime,
+    finishedAt,
+  } = props.task;
   const daysLeft = getDayDifference(deadline);
+
   const getIcon = (taskType) => {
-    if(taskType === "Hobby") return <HobbyTaskIcon />;
-    if(taskType === "School") return <SchoolTaskIcon />;
-    if(taskType === "Home") return <HomeTaskIcon />;
-    if(taskType === "Work") return <WorkTaskIcon />;
+    taskType = taskType.toLowerCase();
+    if(taskType === "hobby") return <HobbyTaskIcon />;
+    if(taskType === "school") return <SchoolTaskIcon />;
+    if(taskType === "home") return <HomeTaskIcon />;
+    if(taskType === "work") return <WorkTaskIcon />;
+    return <OtherTask />;
 
   }
+  console.log("Created at " + createdAt)
 
     return (
-      <Link to={`/view-task/${_id}`}>
+      <Link to={`/view-task/${id}`}>
         <div className="task-card">
           <div className="task-card-upper">
             <h3>{title}</h3>
@@ -30,23 +44,24 @@ const TaskCard = (props) => {
           </div>
 
           <div className="task-card-lower">
-            <h4 className="task-card-date">
-              Created at: {createdAt.substring(0, 10)}
+            <h4 className="task-card-date">Created at: {createdAt}</h4>
+            {status ? (
+              <h4 className="task-card-deadline">Deadline: {deadline}</h4>
+            ) : (
+              <h4 className="task-card-deadline">Finished on: {finishedAt}</h4>
+            )}
+            {status ? (
+              <h4 className="task-card-left">
+                Days left: {daysLeft} {daysLeft < 2 ? <UrgentTaskIcon /> : null}
+              </h4>
+            ) : (
+              <h4 className="task-card-deadline">
+                Completion time: {completionTime} hours
+              </h4>
+            )}
+            <h4 className="task-card-status">
+              Status: {status ? "Active" : "Finished"}
             </h4>
-            {status === 'Active' ? <h4 className="task-card-deadline">
-              Deadline: {deadline.substring(0, 10)}
-            </h4> :
-            <h4 className='task-card-deadline'>
-              Finished on: {finishedAt.substring(0, 10)}
-            </h4>
-            }
-            {status === 'Active' ? <h4 className="task-card-left">
-              Days left: {daysLeft} {daysLeft < 2 ? <UrgentTaskIcon /> : null}
-            </h4> : 
-            <h4 className="task-card-deadline">
-              Completion time: {completionTime} hours
-              </h4>}
-            <h4 className="task-card-status">Status: {status}</h4>
           </div>
         </div>
       </Link>

@@ -7,6 +7,7 @@ import HomeTaskIcon from "../../assets/home-task.icon";
 import WorkTaskIcon from "../../assets/work-task.icon";
 import UrgentTaskIcon from "../../assets/urgent-task.icon";
 import getDayDifference from "../../utils/getDayDifference";
+import OtherTask from "../../assets/other-task.icon";
 
 
 const ViewTask = () => {
@@ -18,37 +19,41 @@ const ViewTask = () => {
     const [timeToComplete, setTimeToComplete] = useState(0);
 
     useEffect(() => {
-    fetch(`/api/get-task/${taskId}`)
-        .then((response) => {
-          if(!response.ok){
-            window.location.href = '/'
-          }
-          return response.json()
-        })
-        .then((data) => {setTask(data)});        
+    fetch(`http://localhost:8080/api/tasks/${taskId}`)
+      .then((response) => {
+        if (!response.ok) {
+          window.location.href = "/";
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTask(data);
+      });        
     }, [])
 
     const getTaskIcon = (type) => {
+      type = type.toLowerCase();
       if(type === "Hobby") return <HobbyTaskIcon/>
       if(type === "Work") return <WorkTaskIcon/>
       if(type === "School") return <SchoolTaskIcon />
       if(type === "Home") return <HomeTaskIcon />
+      return <OtherTask />
     }
 
     const handleDeleteTask = () => {
-      // Proxy not working here
-      fetch(`http://localhost:8888/api/delete-task/${taskId}`)
-        .then((response) => {
-          console.log(response)
-        if(response.status === 200){
-          setErrorColor('green');
-          setErrorMessage('Task deleted successfully');
+      fetch(`http://localhost:8080/api/tasks/${taskId}`, {
+        method: "DELETE",
+      }).then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setErrorColor("green");
+          setErrorMessage("Task deleted successfully");
           setIsDisabledButton(true);
         } else {
           setErrorColor("red");
           setErrorMessage("There was an error deleting the task");
         }
-      })
+      });
 
     }
 
@@ -60,27 +65,30 @@ const ViewTask = () => {
         return;
       }
 
-    fetch(`http://localhost:8888/api/complete-task/${taskId}/${timeToComplete}`).then(
-      (response) => {
-        console.log(response);
-        if (response.status === 200) {
-          setErrorColor("green");
-          setErrorMessage("Task completed successfully");
-          setIsDisabledButton(true);
-        } else {
-          setErrorColor("red");
-          setErrorMessage("There was an error completing the task");
-        }
+    fetch(
+      `http://localhost:8080/api/tasks/${taskId}/complete/${timeToComplete}`,
+      {
+        method: "PUT",
       }
-    );
+    ).then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        setErrorColor("green");
+        setErrorMessage("Task completed successfully");
+        setIsDisabledButton(true);
+      } else {
+        setErrorColor("red");
+        setErrorMessage("There was an error completing the task");
+      }
+    });
     }
 
     const handleInput = (event) => { 
       const time = event.target.value;
       setTimeToComplete(time);
     }
-    
 
+    console.log(task);
     
     return (
       <div className="container">
@@ -95,10 +103,10 @@ const ViewTask = () => {
 
         <h5> {task && task.description}</h5>
         <div className="">
-          <h5>Task created at: {task && task.createdAt.substring(0, 10)}</h5>
-          <h5>Task deadline: {task && task.deadline.substring(0, 10)}</h5>
+          <h5>Task created at: {task && task.createdAt}</h5>
+          <h5>Task deadline: {task && task.deadline}</h5>
           <h5>Estimated time in hours: {task && task.estimatedTime}</h5>
-          {task && task.status === "Active" ? <h5>
+          {task && task.status ? <h5>
             Days remaining: {task && getDayDifference(task.deadline)}{" "}
             {task && getDayDifference(task.deadline) < 2 ? (
               <UrgentTaskIcon />
@@ -106,9 +114,9 @@ const ViewTask = () => {
           </h5> : null}
         </div>
 
-        <h5>Task status: {task && task.status}</h5>
+        <h5>Task status: {task && task.status ? "Active" : "Inactive"}</h5>
 
-        {task && task.status === "Active" ? (
+        {task && task.status ? (
           <>
             <h5>
               Time spent on task:
@@ -124,9 +132,9 @@ const ViewTask = () => {
           </>
         ) : null}
 
-        {task && task.status === "Inactive" ? (
+        {task && task.status === false ? (
           <>
-            <h5>Completed at: {task && task.finishedAt.substring(0, 10)}</h5>
+            <h5>Completed at: {task && task.finishedAt}</h5>
             <h5>Completion time in hours: {task && task.completionTime}</h5>
           </>
         ) : null}

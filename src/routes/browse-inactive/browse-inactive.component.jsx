@@ -8,7 +8,7 @@ const BrowseInactive = () => {
   const [isAscending, setIsAscending] = useState(false);
 
   useEffect(() => {
-    fetch("/api/get-inactive-tasks")
+    fetch("http://localhost:8080/api/tasks/inactive")
       .then((response) => response.json())
       .then((data) => {
         setTasks(data);
